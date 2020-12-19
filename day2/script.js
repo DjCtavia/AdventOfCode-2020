@@ -16,6 +16,7 @@ readInterface.on('line', (line) => {
 
 readInterface.on('close', () => {
     Part1();
+    Part2();
 });
 
 function Part1() {
@@ -31,6 +32,22 @@ function Part1() {
             if (capturedGroups[4][iLetter] === capturedGroups[3])
                 count++;
         if (capturedGroups[1] <= count && count <= capturedGroups[2]) validPasswords++;
+    }
+    console.log(`Valid passwords: ${validPasswords}`);
+}
+
+function Part2() {
+    console.log("---Part 2 ---");
+    const regex = /^(\d+)-(\d+) ([\w]): (\w+)$/;
+    let validPasswords = 0;
+
+    for (let iPassword = 0; iPassword < passwords.length; iPassword++) {
+        const capturedGroups = passwords[iPassword].match(regex);
+
+        if ((capturedGroups[4][capturedGroups[1]-1] === capturedGroups[3] ||
+            capturedGroups[4][capturedGroups[2]-1] === capturedGroups[3]) &&
+            capturedGroups[4][capturedGroups[1]-1] !== capturedGroups[4][capturedGroups[2]-1])
+        validPasswords++;
     }
     console.log(`Valid passwords: ${validPasswords}`);
 }
